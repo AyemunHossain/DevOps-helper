@@ -1,0 +1,71 @@
+/////////////////////////////  Must Do ////////////////////////////////////
+
+1. Create or Modify the Apache Virtual Host Configuration:
+    sudo nano /etc/apache2/sites-available/000-default.conf
+
+2. Set the DocumentRoot to the public Directory:
+    DocumentRoot /var/www/html/laravel/public
+
+        <VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName lms.klapify.com
+        DocumentRoot /var/www/html/laravel/public
+
+        <Directory /var/www/html/laravel/public>
+            Options Indexes FollowSymLinks
+            AllowOverride All
+            Require all granted
+        </Directory>
+
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+        </VirtualHost>
+
+3. Enable the Site Configuration:
+    sudo a2ensite 000-default.conf
+4. Enable mod_rewrite:
+    sudo a2enmod rewrite
+
+5. Restart Apache:
+    sudo service apache2 restart
+
+6. Set the Directory Permissions:
+    sudo chown -R www-data:www-data /var/www/html/laravel/storage
+    sudo chown -R www-data:www-data /var/www/html/laravel/bootstrap/cache
+    sudo chmod -R 775 /var/www/html/laravel/storage
+    sudo chmod -R 775 /var/www/html/laravel/bootstrap/cache
+
+7. Update Laravel Configuration
+    sudo nano /var/www/html/laravel/.env
+
+    APP_NAME=Laravel
+    APP_ENV=production
+    APP_DEBUG=false
+    APP_URL=http://example.com
+
+8. Install Composer Dependencies:
+    composer install --no-dev --optimize-autoloader
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\End Must Do \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+///////////////////////////// Optional ////////////////////////////////////
+
+9. Generate the Laravel Application Key:
+    php artisan key:generate --force
+
+10. Clear Configuration Cache:
+    php artisan config:cache
+
+11. Clear Route Cache:
+    php artisan route:cache
+
+12. Clear View Cache:
+    php artisan view:clear
+
+13. Clear Application Cache:
+    php artisan cache:clear
+
+14. Restart Apache:
+    sudo service apache2 restart
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ End Optional \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
